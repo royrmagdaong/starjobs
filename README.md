@@ -1,8 +1,14 @@
 # starjobs
 
-## Project setup
+## Technology Used
 ```
-npm install
+Vuejs
+Vuetify
+Vuex
+Vue-router
+Vuefire
+Material Design Icon
+
 ```
 
 ### Compiles and hot-reloads for development
