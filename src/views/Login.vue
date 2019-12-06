@@ -48,7 +48,7 @@ export default {
                 window.console.log('email is verified')
                 this.email = '';
                 this.password = '';
-                this.$router.push('/home');
+                this.$router.push('/profile');
             }else{
                 window.console.log('email is not verified')
                 db.auth().signOut();

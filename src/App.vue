@@ -30,26 +30,44 @@ export default {
       var currentUser = db.auth().currentUser;
       if(currentUser!=null){
 
-        var docRef = dbFirestore.collection("users").doc(db.auth().currentUser.uid);
+        if(currentUser.displayName == 'true'){
+          var userDoc = dbFirestore.collection("applicant").doc(db.auth().currentUser.uid);
 
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                window.console.log("Document data:", doc.data().aboutMe);
-                
-                //store data in vuex
-                this.$store.dispatch('setAboutMe',doc.data().aboutMe);
-            } else {
-                // doc.data() will be undefined in this case
-                window.console.log("No such document!");
-            }
-        }).catch((error) => {
-            window.console.log("Error getting document:", error);
-            
-        });
+          userDoc.get().then((doc) => {
+              if (doc.exists) {
+                  
+                  //store data in vuex
+                  this.$store.dispatch('setIsApplicant',doc.data().isApplicant);
+              } else {
+                  // doc.data() will be undefined in this case
+                  window.console.log("No such document!");
+              }
+          }).catch((error) => {
+              window.console.log("Error getting document:", error);
+              
+          });
+        }else{
+          var companyDoc = dbFirestore.collection("company").doc(db.auth().currentUser.uid);
+
+          companyDoc.get().then((doc) => {
+              if (doc.exists) {
+                  
+                  //store data in vuex
+                  this.$store.dispatch('setIsCompany',doc.data().isCompany);
+              } else {
+                  // doc.data() will be undefined in this case
+                  window.console.log("No such document!");
+              }
+          }).catch((error) => {
+              window.console.log("Error getting document:", error);
+              
+          });
+        }
 
       }else{
-        window.console.log('null'); 
-        this.$store.dispatch('setAboutMe',null);
+        window.console.log('null');
+        this.$store.dispatch('setIsApplicant',false);
+        this.$store.dispatch('setIsCompany',false);
       }
     });
   },

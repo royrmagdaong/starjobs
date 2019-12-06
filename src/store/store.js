@@ -3,27 +3,37 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-
 export const store = new Vuex.Store({
     state:{
-        aboutMe:{},
+        isApplicant:false,
+        isCompany:false,
     },
     getters:{
-        getAboutMe: state => {
-            return state.aboutMe;
+        getIsApplicant: state => {
+            return state.isApplicant;
         },
+        getIsCompany: state => {
+            return state.isCompany;
+        }
     },
     mutations:{
-        setAboutMe(state,data){
+        setIsApplicant(state,data){
             if(data!=null){
-                state.aboutMe = data;
-            }
+                state.isApplicant = data;
+            } 
         },
-        
+        setIsCompany(state,data){
+            if(data!=null){
+                state.isCompany = data;
+            } 
+        }
     },
     actions:{
-        setAboutMe: (context,payload) => {
-            context.commit('setAboutMe', payload);
+        setIsApplicant: (context,payload) => {
+            context.commit('setIsApplicant', payload);
+        },
+        setIsCompany: (context,payload) => {
+            context.commit('setIsCompany', payload);
         }
     }
 })

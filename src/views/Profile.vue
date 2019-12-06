@@ -1,6 +1,8 @@
 <template>
   <v-container>
-      <v-row no-gutters>
+
+      <!-- Applicant Profile -->
+      <v-row no-gutters v-if="getIsApplicant">
           <v-col cols="12" md="4" class="pa-1">
               <v-card class="white">
                 <v-container>
@@ -194,12 +196,47 @@
                   <v-col cols="12" class="text-center">
                     <v-btn color="primary">Download Resume <v-icon>mdi-download</v-icon></v-btn>
                   </v-col>
-                  
                 </v-row>
-
 
               </v-container>
             </v-card>
+          </v-col>
+      </v-row>
+
+
+
+
+
+
+      <!-- Company Profile -->
+      <v-row no-gutters v-if="getIsCompany">
+          <v-col cols="12">
+            <v-card tile>
+              <div style="position:relative;">
+                <v-img
+                  :src="require('../assets/no_banner_img.png')"
+                  height="150"
+                >
+                </v-img>
+                <v-img style="position:absolute; top:45px; left:50px; z-index:2; border:solid 1px #eee;"
+                  :src="require('../assets/no_company_profile_img.png')"
+                  height="130"
+                  width="130"
+                >
+                </v-img>
+              </div>
+              <v-card tile elevation="0" class="white" height="50">
+              </v-card>
+            </v-card>
+
+
+            <v-col cols="12" class="px-0 py-2">
+              <v-card class="white" tile height="300">
+
+              </v-card>
+          </v-col>
+
+
           </v-col>
       </v-row>
   </v-container>
@@ -233,8 +270,11 @@ export default {
       model: 0,
     }),
     computed: {
-      getAboutMe () {
-        return this.$store.getters.getAboutMe;
+      getIsApplicant(){
+        return this.$store.getters.getIsApplicant;
+      },
+      getIsCompany(){
+        return this.$store.getters.getIsCompany;
       }
     },
     methods:{
