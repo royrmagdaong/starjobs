@@ -14,15 +14,15 @@
                     style="background:#424242;"
                     class="ma-0"
                 >
-                    <p class="white--text ma-0 caption">Company Logo</p>
+                    <v-img :src="require('../assets/no_company_profile_img.png')"></v-img>
                 </v-list-item-avatar>
             </v-col>
             <v-col cols="12" md="10" class="pt-0">
                 <v-list-item-content>
-                    <div class="title primary--text text--darken-3">PASTRY CHEF (INTERNATIONAL CENTURY DISHES RESTAURANT)</div>
-                    <v-list-item-subtitle>JB INTERNATIONAL MANPOWER SERVICES CORPORATION</v-list-item-subtitle>
-                    <v-list-item-title class="overline">Saudi Arabia - ALKHOBAR</v-list-item-title>
-                    <v-list-item-title class="overline">Login to view salary</v-list-item-title>
+                    <div class="title primary--text text--darken-3">{{jobPost.positionTitle}}</div>
+                    <v-list-item-subtitle>{{jobPost.companyName}}</v-list-item-subtitle>
+                    <v-list-item-title class="overline">{{jobPost.location}}</v-list-item-title>
+                    <v-list-item-title class="overline">Php: {{jobPost.expectedSalary}}</v-list-item-title>
                 </v-list-item-content>
             </v-col>
         </v-row>
@@ -34,7 +34,7 @@
         <v-divider class="mx-2"></v-divider>
         <v-card-actions>
             <p class="text-justify body-2 mx-1">
-                Candidate must possess at least a Vocational Diploma / Short Course Certificate, Food & Beverage Services Management or equivalent. At least 2...
+                {{jobPost.jobDescriptions}}
             </p>
         </v-card-actions>
     </v-card>
@@ -42,7 +42,7 @@
 
 <script>
 export default {
-
+    props:['jobPost']
 }
 </script>
 

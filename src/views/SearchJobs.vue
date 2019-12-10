@@ -27,17 +27,17 @@
 
 
           <v-col cols="12" lg="8" class="pt-0 px-2">
-            <div v-for="(i,index) in 20" :key="index" class="mb-2">
-                <job-post></job-post>
+            <div v-for="(getJobPost,index) in getJobPosts" :key="index" class="mb-2">
+                <job-post :jobPost="getJobPost"></job-post>
             </div>
-             <v-pagination
-                v-model="page"
+             <!-- <v-pagination
+                v-model="page"  
                 :length="12"
                 prev-icon="mdi-menu-left"
                 next-icon="mdi-menu-right"
                 total-visible="7"
                 class="mb-1"
-             ></v-pagination>
+             ></v-pagination> -->
           </v-col>
 
 
@@ -66,6 +66,9 @@ export default {
         'job-post':JobPost,
         
     },
+    created(){
+        this.$store.dispatch('setJobPosts','');
+    },
     data:()=>({
         page: 1,
         items: [
@@ -75,8 +78,14 @@ export default {
           'Marikina City',
           'All'
         ],
-        browseJobs:['All Jobs','Specialization','Location','Company Names','Fresh Grad Jobs','Call Center Jobs','Government Jobs']
-    })
+        browseJobs:['All Jobs','Specialization','Location','Company Names','Fresh Grad Jobs','Call Center Jobs','Government Jobs'],
+        
+    }),
+    computed:{
+        getJobPosts(){
+            return this.$store.getters.getJobPosts;
+        }
+    },
 }
 </script>
 

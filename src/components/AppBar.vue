@@ -20,7 +20,7 @@
       <v-spacer></v-spacer>
       
       <v-toolbar-items>
-        <v-menu open-on-hover offset-y >
+        <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on }">
                 <v-btn
                 v-on="on"
@@ -65,9 +65,34 @@
 
             <v-list-item
               router-link
-              to="/profile"
+              to="/search-jobs"
+              v-if="getIsApplicant"
             >
-              <v-list-item-title class="caption">Profile</v-list-item-title>
+              <v-list-item-title class="caption" >Search Jobs</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              router-link
+              to="/post-job"
+              v-if="getIsCompany"
+            >
+              <v-list-item-title class="caption" >Post a Job</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              router-link
+              to="/profile"
+              v-if="getIsApplicant"
+            >
+              <v-list-item-title class="caption" >Profile</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              router-link
+              to="/profile"
+              v-if="getIsCompany"
+            >
+              <v-list-item-title class="caption" >Company Profile</v-list-item-title>
             </v-list-item>
 
             <v-list-item
@@ -116,12 +141,43 @@
         <v-list-item
           router-link
           to="/profile"
-          v-if="isLogin"
+          v-if="isLogin && getIsApplicant"
         >
           <v-list-item-content>
             <v-list-item-title >Profile</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item
+          router-link
+          to="/profile"
+          v-if="isLogin && getIsCompany"
+        >
+          <v-list-item-content>
+            <v-list-item-title >Company Profile</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+          router-link
+          to="/post-job"
+          v-if="isLogin && getIsCompany"
+        >
+          <v-list-item-content>
+            <v-list-item-title >Post A Job</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+          router-link
+          to="/search-jobs"
+          v-if="isLogin && getIsApplicant"
+        >
+          <v-list-item-content>
+            <v-list-item-title >Search Job</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        
 
         <v-list-item
           router-link
@@ -182,9 +238,17 @@ export default {
     },
     logout(){
       db.auth().signOut();
-      this.$router.push('/')
+      this.$router.push('/');
     }
-  }
+  },
+    computed: {
+      getIsApplicant(){
+        return this.$store.getters.getIsApplicant;
+      },
+      getIsCompany(){
+        return this.$store.getters.getIsCompany;
+      }
+    }
 }
 </script>
 
