@@ -38,6 +38,7 @@ export default {
                   
                   //store data in vuex
                   this.$store.dispatch('setIsApplicant',doc.data().isApplicant);
+                  this.$store.dispatch('setApplicantInfo',doc.data());
               } else {
                   // doc.data() will be undefined in this case
                   window.console.log("No such document!");
@@ -54,6 +55,7 @@ export default {
                   
                   //store data in vuex
                   this.$store.dispatch('setIsCompany',doc.data().isCompany);
+                  this.$store.dispatch('setCompanyInfo',doc.data());
               } else {
                   // doc.data() will be undefined in this case
                   window.console.log("No such document!");

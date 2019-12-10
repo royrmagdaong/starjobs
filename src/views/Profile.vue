@@ -286,7 +286,7 @@ export default {
         }else if(val==2){
           return 'Skills';
         }else if(val==3){
-          return this.getAboutMe;
+          return 'About Me';
         }else if(val==4){
           return 'Resume';
         }
