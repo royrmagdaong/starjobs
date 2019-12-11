@@ -15,8 +15,8 @@
                         ></v-img>
                     </v-col>
                     <v-col cols="8" class="pb-0">
-                        <p class="title ma-0">John Doe</p>
-                        <p class="caption ma-0">SOFTWARE ENGINEER</p>
+                        <p class="title ma-0">{{getApplicantInfo.aboutMe.name}}</p>
+                        <p class="caption ma-0">{{getApplicantInfo.aboutMe.title}}</p>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -24,24 +24,29 @@
                 <v-list>
                     <v-list-item-group v-model="model" mandatory color="primary">
                         <v-list-item
-                        v-for="(item, i) in items"
-                        :key="i"
+                          v-for="(item, i) in items"
+                          :key="i"
                         >
-                        <v-list-item-icon>
-                            <v-icon v-text="item.icon"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.text"></v-list-item-title>
-                        </v-list-item-content>
+                          <v-list-item-icon>
+                              <v-icon v-text="item.icon"></v-icon>
+                          </v-list-item-icon>
+                          <v-list-item-content>
+                              <v-list-item-title v-text="item.text"></v-list-item-title>
+                          </v-list-item-content>
                         </v-list-item>
                     </v-list-item-group>
                 </v-list>
-
               </v-card>
           </v-col>
           <v-col cols="12" md="8" style="height:85%" class="pa-1">
             <v-card class="white" >
               <v-container class="pt-0">
+
+
+
+
+
+
 
                 <!-- EDUCATION -->
                 <v-row v-if="items[model].text=='Education'">
@@ -66,125 +71,380 @@
                   </v-col>
                 </v-row>
 
+
+
+
+
+
+
+
+
                 <!-- EXPERIENCE -->
                 <v-row v-if="items[model].text=='Experience'">
                   <v-col cols="12">
-                    <p class="title">Experience <v-icon color="primary" class="ml-2" @click.prevent="">mdi-border-color</v-icon></p>
+                    <span class="title">Experience </span>
+                    <!-- dialog edit about me -->
+                      <v-dialog v-model="experienceDialog" max-width="800px">
+                        <template v-slot:activator="{ on }">
+                          <span v-on="on" >
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on }">
+                                <v-icon @click.prevent="" color="primary" class="ml-2" v-on="on">mdi-border-color</v-icon>
+                              </template>
+                              <span>Edit All</span>
+                            </v-tooltip>
+                          </span>
+                        </template>
+                        <v-card :class="{'pa-0': $vuetify.breakpoint.xsOnly, 'pa-12': $vuetify.breakpoint.smAndUp}">
+                          <p class="headline text-center">Experience</p>
+
+                          <!-- EXPERIENCE, Form -->
+                          <div class="pa-2 text-center">
+                            <div style="border:1px solid #424242" class="px-2 py-6 my-4" 
+                              v-for="(experience,index) in getApplicantInfo.experience" :key="index"
+                            >
+                              <p class="caption primary--text">Experience {{index+1}}</p>
+                              <v-text-field
+                                label="Company Name"
+                                outlined
+                                color="primary"
+                                dense
+                                v-model="getApplicantInfo.experience[index].companyName"
+                              ></v-text-field>
+                              <v-container fluid class="pa-0">
+                                <v-row>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Timeline"
+                                      outlined
+                                      color="primary"
+                                      dense
+                                      v-model="getApplicantInfo.experience[index].timeline"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Job Position"
+                                      outlined
+                                      color="primary"
+                                      dense
+                                      v-model="getApplicantInfo.experience[index].jobPosition"
+                                    ></v-text-field>
+                                  </v-col>
+                                </v-row>
+                              </v-container>
+                              <div 
+                                v-for="(responsibility,index2) in getApplicantInfo.experience[index].responsibilities"
+                                :key="index2"
+                              >
+                                <v-textarea
+                                  label="Responsibility"
+                                  outlined
+                                  color="primary"
+                                  dense
+                                  rows="3"
+                                  v-model="getApplicantInfo.experience[index].responsibilities[index2]"
+                                ></v-textarea>
+                              </div>
+                              <v-divider class="primary mb-4"></v-divider>
+                              <p class="caption font-weight-bold">Add Responsibility</p>
+                              <v-textarea
+                                label="Responsibility"
+                                outlined
+                                color="primary"
+                                dense
+                                rows="3"
+                              ></v-textarea>
+                              <v-btn color="primary darken-1">Add Responsibility</v-btn>
+                            </div>
+
+                            <v-divider class="light-green mt-12"></v-divider>
+                            <v-divider class="light-green"></v-divider>
+                            <p class="title text-center ma-2">Add New Experience</p>
+                            <v-divider class="light-green"></v-divider>
+                            <v-divider class="light-green mb-12"></v-divider>
+
+                            <!-- Add new Experience -->
+                            <div style="border:1px solid #8BC34A" class="px-2 py-6 text-center">
+                              <v-text-field
+                                label="Company Name"
+                                outlined
+                                color="light-green"
+                                dense
+                                v-model="newExperience.companyName"
+                              ></v-text-field>
+                              <v-container fluid class="pa-0">
+                                <v-row>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Timeline"
+                                      outlined
+                                      color="light-green"
+                                      dense
+                                      v-model="newExperience.timeline"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Job Position"
+                                      outlined
+                                      color="light-green"
+                                      dense
+                                      v-model="newExperience.jobPosition"
+                                    ></v-text-field>
+                                  </v-col>
+                                </v-row>
+                              </v-container>
+                              <div v-for="(resp,index) in newExperience.responsibilities" :key="index">
+                                <v-textarea
+                                  label="Responsibility"
+                                  outlined
+                                  color="light-green"
+                                  dense
+                                  rows="3"
+                                  v-model="newExperience.responsibilities[index]"
+                                ></v-textarea>
+                              </div>
+                              <v-divider class="light-green mb-4"></v-divider>
+                              <p class="caption font-weight-bold" >Add Responsibility</p>
+                              <v-textarea
+                                label="Responsibility"
+                                outlined
+                                color="light-green"
+                                dense
+                                rows="3"
+                                v-model="newResponsibility"
+                              ></v-textarea>
+                              <v-btn color="light-green white--text" @click="addNewReponsibility()">Add Responsibility</v-btn>
+                            </div>
+                            <v-btn block color="light-green white--text mt-4" @click="addExperience()">Add Experience</v-btn>
+                          </div>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary " text @click="experienceDialog = false">Close</v-btn>
+                            <v-btn color="primary " text @click.prevent="updateExperiece()">Save</v-btn>
+                          </v-card-actions>
+
+                        </v-card>
+                      </v-dialog>
+
                     <v-divider></v-divider>
-                    <v-row no-gutters class="pt-2">
-                      <v-col cols="4"><p>2011-2015:</p></v-col>
-                      <v-col cols="8">
-                        <p class="title mb-1">Accenture Inc.</p>
-                        <p class="caption mb-1 font-italic">Web Designer</p>
-                        <ul>
-                          <li><p class="caption mb-1 font-italic">Created custom graphics sets for client, with excellent client's satisfactory scores</p></li>
-                          <li><p class="caption mb-1 font-italic">Handled all composition, color, illustration, typography, and branding for client projects.</p></li>
-                          <li><p class="caption mb-1 font-italic">Commonly spearheaded 4+ projects at one time</p></li>
-                          <li><p class="caption mb-1 font-italic">Improved UX for websites</p></li>
-                        </ul>
-                        
-                      </v-col>
-                    </v-row>
-                    <v-row no-gutters class="pt-2">
-                      <v-col cols="4"><p>2011-2015:</p></v-col>
-                      <v-col cols="8">
-                        <p class="title mb-1">Accenture Inc.</p>
-                        <p class="caption mb-1 font-italic">Web Designer</p>
-                        <ul>
-                          <li><p class="caption mb-1 font-italic">Created custom graphics sets for client, with excellent client's satisfactory scores</p></li>
-                          <li><p class="caption mb-1 font-italic">Handled all composition, color, illustration, typography, and branding for client projects.</p></li>
-                          <li><p class="caption mb-1 font-italic">Commonly spearheaded 4+ projects at one time</p></li>
-                          <li><p class="caption mb-1 font-italic">Improved UX for websites</p></li>
-                        </ul>
-                        
-                      </v-col>
-                    </v-row>
-                    <v-row no-gutters class="pt-2">
-                      <v-col cols="4"><p>2011-2015:</p></v-col>
-                      <v-col cols="8">
-                        <p class="title mb-1">Accenture Inc.</p>
-                        <p class="caption mb-1 font-italic">Web Designer</p>
-                        <ul>
-                          <li><p class="caption mb-1 font-italic">Created custom graphics sets for client, with excellent client's satisfactory scores</p></li>
-                          <li><p class="caption mb-1 font-italic">Handled all composition, color, illustration, typography, and branding for client projects.</p></li>
-                          <li><p class="caption mb-1 font-italic">Commonly spearheaded 4+ projects at one time</p></li>
-                          <li><p class="caption mb-1 font-italic">Improved UX for websites</p></li>
-                        </ul>
-                        
-                      </v-col>
-                    </v-row>
-                    <v-row no-gutters class="pt-2">
-                      <v-col cols="4"><p>2011-2015:</p></v-col>
-                      <v-col cols="8">
-                        <p class="title mb-1">Accenture Inc.</p>
-                        <p class="caption mb-1 font-italic">Web Designer</p>
-                        <ul>
-                          <li><p class="caption mb-1 font-italic">Created custom graphics sets for client, with excellent client's satisfactory scores</p></li>
-                          <li><p class="caption mb-1 font-italic">Handled all composition, color, illustration, typography, and branding for client projects.</p></li>
-                          <li><p class="caption mb-1 font-italic">Commonly spearheaded 4+ projects at one time</p></li>
-                          <li><p class="caption mb-1 font-italic">Improved UX for websites</p></li>
-                        </ul>
-                        
-                      </v-col>
-                    </v-row>  
+
+                    <!-- Experience View -->
+                    <div v-for="(experience,index) in getApplicantInfo.experience" :key="index">
+                      <v-row no-gutters class="pt-2">
+                        <v-col cols="4"><p>{{getApplicantInfo.experience[index].timeline}}</p></v-col>
+                        <v-col cols="8">
+                          <p class="title mb-1">{{getApplicantInfo.experience[index].companyName}}</p>
+                          <p class="caption mb-1 font-italic">{{getApplicantInfo.experience[index].jobPosition}}</p>
+                          <ul v-for="(responsibility,index2) in getApplicantInfo.experience[index].responsibilities" :key="index2">
+                            <li><p class="caption mb-1 font-italic">{{responsibility}}</p></li>
+                          </ul>
+                        </v-col>
+                      </v-row>
+                      <v-divider class="my-2"></v-divider>
+                    </div>
+                    
                   </v-col>
                 </v-row>
+
+
+
+
+
+
+
                 
                 <!-- SKILLS -->
                 <v-row v-if="items[model].text=='Skills'">
                   <v-col cols="12">
-                    <p class="title">Skills <v-icon color="primary" class="ml-2" @click.prevent="">mdi-border-color</v-icon></p>
+                    <div>
+                      <span class="title">Skills </span>
+                      <!-- dialog edit about me -->
+                      <v-dialog v-model="skillsDialog" persistent max-width="600px">
+                        <template v-slot:activator="{ on }">
+                          <v-icon color="primary" class="ml-2" v-on="on">mdi-border-color</v-icon>
+                        </template>
+                        <v-card>
+                          <v-card-title>
+                            <span class="headline">About Me</span>
+                          </v-card-title>
+
+                          <!-- Skills, Form -->
+                          <div class="pa-6">
+                            <div v-for="(skill,index) in getApplicantInfo.skills" :key="index">
+                              <v-text-field
+                                  dense
+                                  :label="'skill: '+(index+1)"
+                                  outlined
+                                  color="primary"
+                                  v-model="getApplicantInfo.skills[index]"
+                                  append-icon="close"
+                                  @click:append="removeSkill(index)"
+                              ></v-text-field>
+                            </div>
+                            <v-divider class="light-green mt-2"></v-divider>
+                            <p class=" caption font-weight-bold ma-0 text-center">Add Skill</p>
+                            <v-divider class="light-green mb-8"></v-divider>
+                            <v-text-field
+                                dense
+                                label="add skill"
+                                outlined
+                                color="light-green"
+                                v-model="newSkill"
+                            ></v-text-field>
+                            <v-btn block color="light-green white--text" @click="addSkill()">Add</v-btn>
+                          </div>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary " text @click="skillsDialog = false">Close</v-btn>
+                            <v-btn color="primary " text @click.prevent="updateSkills()">Save</v-btn>
+                          </v-card-actions>
+
+                        </v-card>
+                      </v-dialog>
+                    </div>
                     <v-divider></v-divider>
-                    <ul class="pt-2">
-                      <li>Javascript</li>
-                      <li>Vuejs</li>
-                      <li>Angular</li>
-                      <li>HTML</li>
-                      <li>CSS</li>
-                      <li>Bootstrap</li>
-                      <li>Materialize</li>
-                      <li>Vuetify</li>
-                      <li>CS6 Adobe Photoshop</li>
-                      <li>Git</li>
+                    <ul class="pt-2" v-for="(skill, index) in getApplicantInfo.skills" :key="index">
+                      <li>{{skill}}</li>
                     </ul>
                   </v-col>
                 </v-row>
 
+
+
+
+
+
+
+
+
                 <!-- ABOUT ME -->
                 <v-row v-if="items[model].text=='About Me'">
                   <v-col cols="12">
-                    <p class="title">About Me <v-icon color="primary" class="ml-2" @click.prevent="">mdi-border-color</v-icon></p>
+                    <div>
+                      <span class="title">About Me </span>
+                      <!-- dialog edit about me -->
+                      <v-dialog v-model="aboutMeDialog" max-width="600px">
+                        <template v-slot:activator="{ on }">
+                          <v-icon color="primary" class="ml-2" v-on="on">mdi-border-color</v-icon>
+                        </template>
+                        <v-card>
+                          <v-card-title>
+                            <span class="headline">About Me</span>
+                          </v-card-title>
+
+                          <!-- About me, Form -->
+                          <div class="pa-6">
+                            <v-text-field
+                                dense
+                                label="Name"
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.name"
+                            ></v-text-field>
+                            <v-text-field
+                                dense
+                                label="Title"
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.title"
+                            ></v-text-field>
+                            <v-text-field
+                                dense
+                                label="Gender"
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.gender"
+                            ></v-text-field>
+                            <v-text-field
+                                dense
+                                label="Contact no."
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.contact"
+                            ></v-text-field>
+                            <v-text-field
+                                dense
+                                label="Email"
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.email"
+                            ></v-text-field>
+                            <v-text-field
+                                dense
+                                label="Date of Birth"
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.dateOfBirth"
+                            ></v-text-field>
+                            <v-text-field
+                                dense
+                                label="Address"
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.address"
+                            ></v-text-field>
+                            <v-text-field
+                                dense
+                                label="Nationality"
+                                outlined
+                                color="primary"
+                                v-model="getApplicantInfo.aboutMe.nationality"
+                            ></v-text-field>
+                          </div>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary darken-1" text @click="aboutMeDialog = false">Close</v-btn>
+                            <v-btn color="primary darken-1" text @click="updateApplicantAboutMe()">Save</v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </div>
+
                     <v-divider></v-divider>
                     <v-row no-gutters class="pt-2">
                       <v-col cols="4"><p>Name:</p></v-col>
-                      <v-col cols="8"><p>---</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.name}}</p></v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                      <v-col cols="4"><p>Title:</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.title}}</p></v-col>
                     </v-row>
                     <v-row no-gutters>
                       <v-col cols="4" ><p>Gender:</p></v-col>
-                      <v-col cols="8"><p>---</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.gender}}</p></v-col>
                     </v-row>
                     <v-row no-gutters>
                       <v-col cols="4" ><p>Contact No.</p></v-col>
-                      <v-col cols="8"><p>---</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.contact}}</p></v-col>
                     </v-row>
                     <v-row no-gutters>
                       <v-col cols="4" ><p>Email</p></v-col>
-                      <v-col cols="8"><p>---</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.email}}</p></v-col>
                     </v-row>
                     <v-row no-gutters>
                       <v-col cols="4" ><p>Date of Birth</p></v-col>
-                      <v-col cols="8"><p>---</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.dateOfBirth}}</p></v-col>
                     </v-row>
                     <v-row no-gutters>
                       <v-col cols="4" ><p>Address</p></v-col>
-                      <v-col cols="8"><p>---</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.address}}</p></v-col>
                     </v-row>
                     <v-row no-gutters>
                       <v-col cols="4" ><p>Nationality</p></v-col>
-                      <v-col cols="8"><p>---</p></v-col>
+                      <v-col cols="8"><p>{{getApplicantInfo.aboutMe.nationality}}</p></v-col>
                     </v-row>
                   </v-col>
                 </v-row>
+
+
+
+
+
 
 
                 <!-- RESUME -->
@@ -201,80 +461,58 @@
               </v-container>
             </v-card>
           </v-col>
+
       </v-row>
 
-
-
-
-
-
-      <!-- Company Profile -->
-      <v-row no-gutters v-if="getIsCompany">
-          <v-col cols="12">
-            <v-card tile>
-              <div style="position:relative;">
-                <v-img
-                  :src="require('../assets/no_banner_img.png')"
-                  height="150"
-                >
-                </v-img>
-                <v-img style="position:absolute; top:45px; left:50px; z-index:2; border:solid 1px #eee;"
-                  :src="require('../assets/no_company_profile_img.png')"
-                  height="130"
-                  width="130"
-                >
-                </v-img>
-              </div>
-              <v-card tile elevation="0" class="white" height="50">
-              </v-card>
-            </v-card>
-
-
-            <v-col cols="12" class="px-0 py-2">
-              <v-card class="white" tile height="300">
-
-              </v-card>
-          </v-col>
-
-
-          </v-col>
-      </v-row>
   </v-container>
 </template>
 
 <script>
+import {dbFirestore,db} from '../firebasedb'
+
 export default {
     data:()=>({
         items: [
-        {
-          icon: 'mdi-inbox',
-          text: 'Education',
+          {
+            icon: 'mdi-inbox',
+            text: 'Education',
+          },
+          {
+            icon: 'mdi-star',
+            text: 'Experience',
+          },
+          {
+            icon: 'mdi-send',
+            text: 'Skills', 
+          },
+          {
+            icon: 'mdi-email-open',
+            text: 'About Me',
+          },
+          {
+            icon: 'mdi-download',
+            text: 'Resume',
+          },
+        ],
+        model: 0,
+        aboutMeDialog:false,
+        skillsDialog:false,
+        experienceDialog:false,
+        newSkill:'',
+        newExperience:{
+          companyName:'',
+          jobPosition:'',
+          timeline:'',
+          responsibilities:[]
         },
-        {
-          icon: 'mdi-star',
-          text: 'Experience',
-        },
-        {
-          icon: 'mdi-send',
-          text: 'Skills', 
-        },
-        {
-          icon: 'mdi-email-open',
-          text: 'About Me',
-        },
-        {
-          icon: 'mdi-download',
-          text: 'Resume',
-        },
-      ],
-      model: 0,
+        newResponsibility:'',
     }),
     computed: {
       getIsApplicant(){
         return this.$store.getters.getIsApplicant;
       },
-      getIsCompany(){
-        return this.$store.getters.getIsCompany;
+      getApplicantInfo(){
+        return this.$store.getters.getApplicantInfo;
       }
     },
     methods:{
@@ -290,6 +528,72 @@ export default {
         }else if(val==4){
           return 'Resume';
         }
+      },
+      updateApplicantAboutMe(){
+        var applicantRef = dbFirestore.collection("applicant").doc(db.auth().currentUser.uid);
+
+        return applicantRef.update({
+            aboutMe:{
+              address:this.getApplicantInfo.aboutMe.address,
+              contact:this.getApplicantInfo.aboutMe.contact,
+              dateOfBirth:this.getApplicantInfo.aboutMe.dateOfBirth,
+              email:this.getApplicantInfo.aboutMe.email,
+              gender:this.getApplicantInfo.aboutMe.gender,
+              name:this.getApplicantInfo.aboutMe.name,
+              nationality:this.getApplicantInfo.aboutMe.nationality,
+              title:this.getApplicantInfo.aboutMe.title
+            }
+        }).then(()=>{
+            window.console.log("Document successfully updated!");
+            this.aboutMeDialog = false;
+        }).catch((error)=>{
+            window.console.error("Error updating document: ", error);
+        });
+      },
+      removeSkill(val){
+        this.getApplicantInfo.skills.splice(val,1);
+      },
+      addSkill(){
+        this.getApplicantInfo.skills.push(this.newSkill);
+        this.newSkill = '';
+      },
+      addExperience(){
+        this.getApplicantInfo.experience.push(this.newExperience);
+
+        this.newExperience = {
+          companyName:'',
+          jobPosition:'',
+          timeline:'',
+          responsibilities:[]
+        };
+      },
+      addNewReponsibility(){
+        this.newExperience.responsibilities.push(this.newResponsibility);
+        this.newResponsibility = '';
+      },
+      updateSkills(){
+        var applicantRef = dbFirestore.collection("applicant").doc(db.auth().currentUser.uid);
+
+        return applicantRef.update({
+            skills: this.getApplicantInfo.skills
+        }).then(()=>{
+            window.console.log("Skills successfully updated!");
+            this.skillsDialog = false;
+        }).catch((error)=>{
+            window.console.error("Error updating document: ", error);
+        });
+      },
+      updateExperiece(){
+        var applicantRef = dbFirestore.collection("applicant").doc(db.auth().currentUser.uid);
+
+        return applicantRef.update({
+            experience: this.getApplicantInfo.experience
+        }).then(()=>{
+            window.console.log("Experience successfully updated!");
+            this.experienceDialog = false;
+        }).catch((error)=>{
+            window.console.error("Error updating document: ", error);
+        });
       }
     }
 }

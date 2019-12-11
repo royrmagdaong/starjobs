@@ -5,101 +5,91 @@
               <v-card dark max-width="500" class="mx-auto pa-8 " elevation="6">
                 <p class="display-1 font-weight-bold text-center white--text">Sign Up</p>
 
-
                 <v-tabs
-                v-model="tab"
-                color="primary"
+                    v-model="tab"
+                    color="primary"
                 >
-                <v-tab
-                    class="pa-0"
-                    style="width:50%;"
-                >
-                    As Applicant
-                </v-tab>
-                <v-tab
-                    class="pa-0"
-                    style="width:50%;"
-                >
-                    As Company
-                </v-tab>
+                    <v-tab class="pa-0" style="width:50%;">
+                        As Applicant
+                    </v-tab>
+                    <v-tab class="pa-0" style="width:50%;">
+                        As Company
+                    </v-tab>
                 </v-tabs>
 
                 <v-tabs-items v-model="tab" style="background:#424242;">
-                <!-- as applicant -->
-                <v-tab-item
-                >
-                    <v-card flat dark tile class="pt-4">
-                        <v-text-field
-                            label="Email"
-                            outlined
-                            prepend-icon="email"
-                            append-icon="close"
-                            v-model="email"
-                        ></v-text-field>
-                        <v-text-field
-                            label="Password"
-                            outlined
-                            type="password"
-                            prepend-icon="lock"
-                            append-icon="close"
-                            v-model="password"
-                        ></v-text-field>
-                        <v-text-field
-                            label="Repeat Password"
-                            outlined
-                            type="password"
-                            prepend-icon="lock"
-                            append-icon="close"
-                            v-model="rPassword"
-                        ></v-text-field>
-                        <v-btn block large light class="primary darken-1 font-weight-bold" @click.prevent="signUp">
-                            Sign Up
-                        </v-btn>
-                    </v-card>
-                </v-tab-item>
+                    <!-- as applicant -->
+                    <v-tab-item>
+                        <v-card flat dark tile class="pt-4">
+                            <v-text-field
+                                label="Email"
+                                outlined
+                                prepend-icon="email"
+                                append-icon="close"
+                                v-model="email"
+                            ></v-text-field>
+                            <v-text-field
+                                label="Password"
+                                outlined
+                                type="password"
+                                prepend-icon="lock"
+                                append-icon="close"
+                                v-model="password"
+                            ></v-text-field>
+                            <v-text-field
+                                label="Repeat Password"
+                                outlined
+                                type="password"
+                                prepend-icon="lock"
+                                append-icon="close"
+                                v-model="rPassword"
+                            ></v-text-field>
+                            <v-btn block large light class="primary darken-1 font-weight-bold" @click.prevent="signUp">
+                                Sign Up
+                            </v-btn>
+                        </v-card>
+                    </v-tab-item>
 
-                <!-- as company -->
-                <v-tab-item
-                >
-                    <v-card flat dark tile class="pt-4">
-                        <v-text-field
-                            label="Company Name"
-                            outlined
-                            prepend-icon="email"
-                            append-icon="close"
-                            v-model="companyName"
-                        ></v-text-field>
-                        <v-text-field
-                            label="Company Email"
-                            outlined
-                            prepend-icon="email"
-                            append-icon="close"
-                            v-model="companyEmail"
-                        ></v-text-field>
-                        <v-text-field
-                            label="Password"
-                            outlined
-                            type="password"
-                            prepend-icon="lock"
-                            append-icon="close"
-                            v-model="companyPassword"
-                        ></v-text-field>
-                        <v-text-field
-                            label="Repeat Password"
-                            outlined
-                            type="password"
-                            prepend-icon="lock"
-                            append-icon="close"
-                            v-model="companyRPassword"
-                        ></v-text-field>
-                        <v-btn block large light class="primary darken-1 font-weight-bold" @click.prevent="signUpAsCompany">
-                            Sign Up
-                        </v-btn>
-                    </v-card>
-                </v-tab-item>
+                    <!-- as company -->
+                    <v-tab-item>
+                        <v-card flat dark tile class="pt-4">
+                            <v-text-field
+                                label="Company Name"
+                                outlined
+                                prepend-icon="email"
+                                append-icon="close"
+                                v-model="companyName"
+                            ></v-text-field>
+                            <v-text-field
+                                label="Company Email"
+                                outlined
+                                prepend-icon="email"
+                                append-icon="close"
+                                v-model="companyEmail"
+                            ></v-text-field>
+                            <v-text-field
+                                label="Password"
+                                outlined
+                                type="password"
+                                prepend-icon="lock"
+                                append-icon="close"
+                                v-model="companyPassword"
+                            ></v-text-field>
+                            <v-text-field
+                                label="Repeat Password"
+                                outlined
+                                type="password"
+                                prepend-icon="lock"
+                                append-icon="close"
+                                v-model="companyRPassword"
+                            ></v-text-field>
+                            <v-btn block large light class="primary darken-1 font-weight-bold" @click.prevent="signUpAsCompany">
+                                Sign Up
+                            </v-btn>
+                        </v-card>
+                    </v-tab-item>
                 </v-tabs-items>
               </v-card>
-
 
           </v-col>
       </v-row>
@@ -146,6 +136,25 @@ export default {
                     dbFirestore.collection('applicant').doc(mAuth.currentUser.uid).set({
                         email:this.email,
                         isApplicant:true,
+                        aboutMe:{
+                            Nationality:'',
+                            Address:'',
+                            DateOfBirth:'',
+                            Email:'',
+                            Contact:'',
+                            Gender:'',
+                            Name:'',
+                            title:''
+                        },
+                        skills:[],
+                        experience:[
+                            {
+                                companyName:'Sample Company Inc.',
+                                jobPosition:'Job Position',
+                                responsibilities:['Sample Responsibility'],
+                                timeline:'2011-present (sample)'
+                            }
+                        ],
 
                     }).then(function(){
                         mAuth.signOut();
@@ -161,8 +170,8 @@ export default {
                     this.email = '';
 
                     }).catch((err)=>{
-                    window.console.log(err.message);
-                    mAuth.signOut();
+                        window.console.log(err.message);
+                        mAuth.signOut();
                     });
 
                 }).catch((error)=>{
@@ -185,10 +194,8 @@ export default {
                     mAuth.currentUser.updateProfile({
                         displayName: "false",
                     }).then(() => {
-                    // Update successful.
                         window.console.log(mAuth.currentUser.displayName);
                     }).catch((error) => {
-                    // An error happened.
                         window.console.log(error);
                     });
 
@@ -213,8 +220,8 @@ export default {
                     this.companyRPassword = '';
 
                     }).catch((err)=>{
-                    window.console.log(err.message);
-                    mAuth.signOut();
+                        window.console.log(err.message);
+                        mAuth.signOut();
                     });
 
                 }).catch((error)=>{

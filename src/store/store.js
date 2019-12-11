@@ -22,7 +22,7 @@ export const store = new Vuex.Store({
         getCompanyInfo: state => {
             return state.companyInfo;
         },
-        getApplicationInfo: state => {
+        getApplicantInfo: state => {
             return state.applicantInfo;
         },
         getJobPosts: state => {
@@ -90,6 +90,4 @@ export const store = new Vuex.Store({
         }
     }
 })
-
-export default store;
 

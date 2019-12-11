@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <app-bar></app-bar>
-    
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -22,7 +21,6 @@ export default {
     //
   }),
   methods:{
-    
   },
   created(){
 
@@ -35,34 +33,30 @@ export default {
 
           userDoc.get().then((doc) => {
               if (doc.exists) {
-                  
                   //store data in vuex
                   this.$store.dispatch('setIsApplicant',doc.data().isApplicant);
+                  this.$store.dispatch('setIsCompany',false);
                   this.$store.dispatch('setApplicantInfo',doc.data());
               } else {
-                  // doc.data() will be undefined in this case
                   window.console.log("No such document!");
               }
           }).catch((error) => {
               window.console.log("Error getting document:", error);
-              
           });
         }else{
           var companyDoc = dbFirestore.collection("company").doc(db.auth().currentUser.uid);
 
           companyDoc.get().then((doc) => {
               if (doc.exists) {
-                  
                   //store data in vuex
                   this.$store.dispatch('setIsCompany',doc.data().isCompany);
+                  this.$store.dispatch('setIsApplicant',false);
                   this.$store.dispatch('setCompanyInfo',doc.data());
               } else {
-                  // doc.data() will be undefined in this case
                   window.console.log("No such document!");
               }
           }).catch((error) => {
               window.console.log("Error getting document:", error);
-              
           });
         }
 

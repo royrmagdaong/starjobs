@@ -1,7 +1,5 @@
 <template>
   <v-container >
-       
-
       <v-row style="height:90vh;" align="center">
           <v-col cols="12" align-self="center" >
               <v-card dark max-width="500" class="mx-auto pa-8 " elevation="6">
@@ -27,9 +25,6 @@
               </v-card>
           </v-col>
       </v-row>
-
-     
-
   </v-container>
 </template>
 
@@ -44,22 +39,25 @@ export default {
     methods:{
         signIn(){
             db.auth().signInWithEmailAndPassword(this.email,this.password).then(()=>{
-            if(db.auth().currentUser.emailVerified){
-                window.console.log('email is verified')
-                this.email = '';
-                this.password = '';
-                this.$router.push('/profile');
-            }else{
-                window.console.log('email is not verified')
-                db.auth().signOut();
-            }
+                if(db.auth().currentUser.emailVerified){
+                    window.console.log('email is verified')
+                    this.email = '';
+                    this.password = '';
+                    if(db.auth().currentUser.displayName == 'false'){
+                        this.$router.push('/company-profile');  
+                    }else{
+                        this.$router.push('/profile');
+                    }
+                }else{
+                    window.console.log('email is not verified')
+                    db.auth().signOut();
+                }
             }).catch((err)=>{
                 window.console.log(err.message)
             });
         },
     },
     
-
 }
 </script>
 
