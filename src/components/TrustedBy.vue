@@ -9,20 +9,9 @@
           </v-col>
           <v-col cols="12" class="py-0 px-10">
               <v-row>
-                  <v-col cols="6" sm="4" md="2" lg="2"
-                    v-for="(companyLogo,index) in companyLogos"
-                    :key="index"
-                    align-self="center"
-                  >
-                    <v-row
-                        align="center"
-                        justify="center"
-                    >
-                        <v-img
-                        :src="companyLogo"
-                        max-width="100px"
-                        >
-                        </v-img>
+                  <v-col cols="6" sm="4" md="2" lg="2" v-for="(companyLogo,index) in companyLogos" :key="index" align-self="center">
+                    <v-row align="center" justify="center" >
+                        <v-img :src="companyLogo" max-width="100px"></v-img>
                     </v-row>
                   </v-col>
               </v-row>

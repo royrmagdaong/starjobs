@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store  from  './store/store'
 
 import {db} from './firebasedb'
 import Home from './views/Home'
@@ -9,10 +8,9 @@ import SignUp from './views/SignUp'
 import SearchJobs from './views/SearchJobs'
 import Profile from './views/Profile'
 import PostJob from './views/PostJob'
+import CompanyProfile from './views/CompanyProfile'
 
 Vue.use(Router)
-
-
 
 const router =  new Router({
   mode: 'history',
@@ -57,7 +55,17 @@ const router =  new Router({
       name: 'Profile',
       component: Profile,
       meta:{
-        requiresAuth: true
+        requiresAuth: true,
+        applicantProfile: true,
+      }
+    },
+    {
+      path: '/company-profile',
+      name: 'CompanyProfile',
+      component: CompanyProfile,
+      meta:{
+        requiresAuth: true,
+        companyProfile:true,
       }
     },
     {
@@ -76,24 +84,36 @@ router.beforeEach((to, from, next) => {
     var requiresAuth = to.matched.some( record => record.meta.requiresAuth );
     var isLogin = to.matched.some( record => record.meta.isLogin);
     var postJob = to.matched.some( record => record.meta.postJob);
-    var isCompany = store.getters.getIsCompany;
+    var applicantProfile = to.matched.some( record => record.meta.applicantProfile);
+    var companyProfile = to.matched.some( record => record.meta.companyProfile);
     var currentUser = db.auth().currentUser;
+    var currentDisplayName = false;
 
+    if(currentUser == null){
+      currentDisplayName = false;
+    }else{
+      currentDisplayName = currentUser.displayName;
+    }
 
-
-    // when route requires auth and there's no current user, reidrect to '/login'
+    
     if(requiresAuth && currentUser==null) {
-      next('login')
+      next('login');
       window.console.log('1');
     }else if(!requiresAuth && currentUser && isLogin){
-      next('search-jobs')
+      next('search-jobs');
       window.console.log('2');
-    }else if(!isCompany && postJob){
-      next('search-jobs')
-      window.console.log('job post');
+    }else if(currentDisplayName == 'true' && postJob && requiresAuth){
+      next('search-jobs');
+      window.console.log('applicant trying to access postjob view, RETURN to Search Job');
+    }else if(currentDisplayName == 'false' && applicantProfile && requiresAuth){
+      next('company-profile');
+      window.console.log('company trying to access applicant profile view, RETURN to Company Profile');
+    }else if(currentDisplayName == 'true' && companyProfile && requiresAuth){
+      next('profile');
+      window.console.log('applicant trying to access company profile view, RETURN to Applicant Profile');
     }else{
       next();
-      window.console.log('4');
+      window.console.log('normal route');
     } 
   });
 

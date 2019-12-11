@@ -13,8 +13,8 @@
                     :items="items"
                     label="Location"
                     outlined
-                    ></v-combobox>
-                    <v-btn block large class="primary">Search</v-btn>
+                   ></v-combobox>
+                   <v-btn block large class="primary">Search</v-btn>
               </v-card>
 
               <v-card tile class="pa-4" style="position:fixed; top:57%;" width="16%" height="41.7%">
@@ -71,13 +71,7 @@ export default {
     },
     data:()=>({
         page: 1,
-        items: [
-          'Pasig City',
-          'Makati City',
-          'Taguig City',
-          'Marikina City',
-          'All'
-        ],
+        items: ['Pasig City','Makati City','Taguig City','Marikina City','All'],
         browseJobs:['All Jobs','Specialization','Location','Company Names','Fresh Grad Jobs','Call Center Jobs','Government Jobs'],
         
     }),
