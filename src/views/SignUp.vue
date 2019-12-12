@@ -155,6 +155,14 @@ export default {
                                 timeline:'2011-present (sample)'
                             }
                         ],
+                        education:[
+                            {
+                                educationLevel:'Tersiary',
+                                schoolName:'Sample School Name',
+                                program:'Bachelor of Science in Sample Program',
+                                timeline:'2019-present'
+                            }
+                        ]
 
                     }).then(function(){
                         mAuth.signOut();

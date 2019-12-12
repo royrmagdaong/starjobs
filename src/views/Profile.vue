@@ -51,23 +51,146 @@
                 <!-- EDUCATION -->
                 <v-row v-if="items[model].text=='Education'">
                   <v-col cols="12">
-                    <p class="title">Education <v-icon color="primary" class="ml-2" @click.prevent="">mdi-border-color</v-icon></p>
+                    <span class="title">Education </span>
+                      <!-- dialog EDUCATION -->
+                      <v-dialog v-model="educationDialog" max-width="600px">
+                        <template v-slot:activator="{ on }">
+                          <v-icon color="primary" class="ml-2" v-on="on">mdi-border-color</v-icon>
+                        </template>
+                        <v-card>  
+                          <v-card-title>
+                            <span class="headline">Education</span>
+                          </v-card-title>
+
+                          <!-- EDUCATION, Form -->
+                          <div class="pa-2">
+                            <div class="pa-4 my-2" style="border:1px #424242 solid;"
+                              v-for="(education,index) in getApplicantInfo.education" :key="index"
+                            >
+                              <p class="primary--text text-center caption">Education {{index+1}}</p>
+                              <v-text-field
+                                  dense
+                                  label="School Name"
+                                  hint="No Abbreviation"
+                                  outlined
+                                  color="light-green"
+                                  v-model="getApplicantInfo.education[index].schoolName"
+                              ></v-text-field>
+                              <v-container fluid class="pa-0">
+                                <v-row>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Level"
+                                      hint="ex. Tertiary/Primary/Secondary"
+                                      outlined
+                                      color="light-green"
+                                      dense
+                                      v-model="getApplicantInfo.education[index].educationLevel"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Timeline"
+                                      hint="ex. 2012-2018 / 2019-present"
+                                      outlined
+                                      color="light-green"
+                                      dense
+                                      v-model="getApplicantInfo.education[index].timeline"
+                                    ></v-text-field>
+                                  </v-col>
+                                </v-row>
+                              </v-container>
+                              <v-text-field
+                                  dense
+                                  label="Program"
+                                  hint="ex. BS in Information Technology, No Abbrev"
+                                  outlined
+                                  color="light-green"
+                                  v-model="getApplicantInfo.education[index].program"
+                              ></v-text-field>
+                            </div>
+                            
+                            
+                            <v-divider class="light-green mt-6"></v-divider>
+                            <v-divider class="light-green"></v-divider>
+                            <v-divider class="light-green mb-6"></v-divider>
+
+                            <!-- ADD EDUCATION -->
+                            <div class="pa-4" style="border:1px solid #8BC34A;">
+                              <p class=" body-2 font-weight-bold ma-2 text-center">Add Education</p>
+                              <v-text-field
+                                  dense
+                                  label="School Name"
+                                  hint="No Abbreviation"
+                                  outlined
+                                  color="light-green"
+                                  v-model="newEducation.schoolName"
+                              ></v-text-field>
+                              <v-container fluid class="pa-0">
+                                <v-row>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Level"
+                                      hint="ex. Tertiary/Primary/Secondary"
+                                      outlined
+                                      color="light-green"
+                                      dense
+                                      v-model="newEducation.educationLevel"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="12" sm="6" class="py-0"> 
+                                    <v-text-field
+                                      label="Timeline"
+                                      hint="ex. 2012-2018 / 2019-present"
+                                      outlined
+                                      color="light-green"
+                                      dense
+                                      v-model="newEducation.timeline"
+                                    ></v-text-field>
+                                  </v-col>
+                                </v-row>
+                              </v-container>
+                              <v-text-field
+                                  dense
+                                  label="Program"
+                                  hint="ex. BS in Information Technology, No Abbrev"
+                                  outlined
+                                  color="light-green"
+                                  v-model="newEducation.program"
+                              ></v-text-field>
+                              <v-btn block color="light-green white--text" @click="addEducation()">Add</v-btn>
+                            </div>
+                          </div>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary " text @click="educationDialog = false">Close</v-btn>
+                            <v-btn color="primary " text @click.prevent="updateEducation()">Save</v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+
+                    <!-- Education View -->
                     <v-divider></v-divider>
-                    <v-row no-gutters class="pt-2">
-                      <v-col cols="4"><p>Primary:</p></v-col>
-                      <v-col cols="6"><p>---</p></v-col>
-                      <v-col cols="2"><p>---</p></v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                      <v-col cols="4" ><p>Secondary:</p></v-col>
-                      <v-col cols="6"><p>---</p></v-col>
-                      <v-col cols="2"><p>---</p></v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                      <v-col cols="4" ><p>Tersiary:</p></v-col>
-                      <v-col cols="6"><p>---</p></v-col>
-                      <v-col cols="2"><p>---</p></v-col>
-                    </v-row>
+                    <div v-for="(education,index) in getApplicantInfo.education" :key="index">
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="3">
+                            <div style="position:relative; height:100%;">
+                              <p class="body-1 font-weight-bold ma-0">{{education.educationLevel}}</p>
+                              <v-divider vertical style="position:absolute; top:0; right:0;" class="hidden-xs-only primary"></v-divider>
+                              <v-divider class="hidden-sm-and-up primary"></v-divider>
+                            </div>
+                          </v-col>
+                          <v-col cols="12" sm="9">
+                            <p class="body-1 font-weight-medium ma-0">{{education.schoolName}}</p>
+                            <p class="ma-0 body-2">{{education.program}}</p>
+                            <p class="ma-0 caption">{{education.timeline}}</p>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <v-divider></v-divider>
+                    </div>
                   </v-col>
                 </v-row>
 
@@ -86,14 +209,7 @@
                     <!-- dialog edit about me -->
                       <v-dialog v-model="experienceDialog" max-width="800px">
                         <template v-slot:activator="{ on }">
-                          <span v-on="on" >
-                            <v-tooltip bottom>
-                              <template v-slot:activator="{ on }">
-                                <v-icon @click.prevent="" color="primary" class="ml-2" v-on="on">mdi-border-color</v-icon>
-                              </template>
-                              <span>Edit All</span>
-                            </v-tooltip>
-                          </span>
+                          <v-icon @click.prevent="" color="primary" class="ml-2" v-on="on">mdi-border-color</v-icon>
                         </template>
                         <v-card :class="{'pa-0': $vuetify.breakpoint.xsOnly, 'pa-12': $vuetify.breakpoint.smAndUp}">
                           <p class="headline text-center">Experience</p>
@@ -223,7 +339,7 @@
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="primary " text @click="experienceDialog = false">Close</v-btn>
-                            <v-btn color="primary " text @click.prevent="updateExperiece()">Save</v-btn>
+                            <v-btn color="primary " text @click.prevent="updateExperience()">Save</v-btn>
                           </v-card-actions>
 
                         </v-card>
@@ -498,6 +614,7 @@ export default {
         aboutMeDialog:false,
         skillsDialog:false,
         experienceDialog:false,
+        educationDialog:false,
         newSkill:'',
         newExperience:{
           companyName:'',
@@ -506,6 +623,12 @@ export default {
           responsibilities:[]
         },
         newResponsibility:'',
+        newEducation:{
+          educationLevel:'',
+          program:'',
+          schoolName:'',
+          timeline:''
+        }
     }),
     computed: {
       getIsApplicant(){
@@ -571,6 +694,16 @@ export default {
         this.newExperience.responsibilities.push(this.newResponsibility);
         this.newResponsibility = '';
       },
+      addEducation(){
+        this.getApplicantInfo.education.push(this.newEducation);
+
+        this.newEducation = {
+          educationLevel:'',
+          program:'',
+          schoolName:'',
+          timeline:''
+        };
+      },
       updateSkills(){
         var applicantRef = dbFirestore.collection("applicant").doc(db.auth().currentUser.uid);
 
@@ -583,7 +716,7 @@ export default {
             window.console.error("Error updating document: ", error);
         });
       },
-      updateExperiece(){
+      updateExperience(){
         var applicantRef = dbFirestore.collection("applicant").doc(db.auth().currentUser.uid);
 
         return applicantRef.update({
@@ -591,6 +724,18 @@ export default {
         }).then(()=>{
             window.console.log("Experience successfully updated!");
             this.experienceDialog = false;
+        }).catch((error)=>{
+            window.console.error("Error updating document: ", error);
+        });
+      },
+      updateEducation(){
+        var applicantRef = dbFirestore.collection("applicant").doc(db.auth().currentUser.uid);
+
+        return applicantRef.update({
+            education: this.getApplicantInfo.education
+        }).then(()=>{
+            window.console.log("Education successfully updated!");
+            this.educationDialog = false;
         }).catch((error)=>{
             window.console.error("Error updating document: ", error);
         });
