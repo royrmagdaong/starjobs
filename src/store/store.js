@@ -31,29 +31,19 @@ export const store = new Vuex.Store({
     },
     mutations:{
         setIsApplicant(state,data){
-            if(data!=null){
-                state.isApplicant = data;
-            } 
+            state.isApplicant = data;
         },
         setIsCompany(state,data){
-            if(data!=null){
-                state.isCompany = data;
-            } 
+            state.isCompany = data;
         },
         setCompanyInfo(state,data){
-            if(data!=null){
-                state.companyInfo = data;
-            } 
+            state.companyInfo = data; 
         },
         setApplicantInfo(state,data){
-            if(data!=null){
-                state.applicantInfo = data;
-            } 
+            state.applicantInfo = data;
         },
         setJobPosts(state,data){
-            if(data!=null){
-                state.jobPosts = data;
-            }
+            state.jobPosts = data;
         }
     },
     actions:{

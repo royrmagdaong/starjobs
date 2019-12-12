@@ -50,7 +50,7 @@
                       <v-divider class="my-2 white"></v-divider>
                   </v-col>
                   <v-col cols="12">
-                      <p class="caption ma-0 text-center primary--text">@2019 Starjobs </p>
+                      <p class="caption ma-0 text-center primary--text">@2019 Starjobs - Created by:royrmagdaong@gmail.com</p>
                   </v-col>
               </v-row>
           </v-col>

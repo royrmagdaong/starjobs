@@ -9,19 +9,30 @@
                     outlined
                     color="primary"
                     v-model="positionTitle"
+                    dense
                 ></v-text-field>
-                <v-text-field
-                    label="Location"
-                    outlined
-                    color="primary"
-                    v-model="location"
-                ></v-text-field>
-                <v-text-field
-                    label="Expected Salary"
-                    outlined
-                    color="primary"
-                    v-model="expectedSalary"
-                ></v-text-field>
+                <v-container fluid class="pa-0">
+                    <v-row>
+                        <v-col cols="12" sm="6" class="py-0">
+                            <v-text-field
+                                label="Location"
+                                outlined
+                                color="primary"
+                                v-model="location"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" class="py-0"> 
+                            <v-text-field
+                                label="Expected Salary"
+                                outlined
+                                color="primary"
+                                v-model="expectedSalary"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+                </v-container>
                 <v-textarea
                     clearable
                     clear-icon="cancel"
@@ -30,6 +41,7 @@
                     outlined
                     color="primary"
                     v-model="qualifications"
+                    dense
                 ></v-textarea>
                 <v-textarea
                     clearable
@@ -39,6 +51,7 @@
                     outlined
                     color="primary"
                     v-model="jobDescriptions"
+                    dense
                 ></v-textarea>
                 <v-btn
                     block
