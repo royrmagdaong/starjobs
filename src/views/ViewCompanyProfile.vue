@@ -1,0 +1,210 @@
+<template>
+  <v-container>
+
+      <!-- Company Profile -->
+      <v-row no-gutters>
+          <v-col cols="12">
+            <v-card tile>
+              <div style="position:relative;">
+                <v-img
+                  :src="require('../assets/no_banner_img.png')"
+                  height="150"
+                >
+                </v-img>
+
+                <!-- sm and above -->
+                <div class="hidden-xs-only">
+                  <v-img style="position:absolute; top:45px; left:50px; z-index:2; border:solid 1px #eee;"
+                    :src="require('../assets/no_company_profile_img.png')"
+                    height="130"
+                    width="130"
+                  >
+                  </v-img>
+
+                  <div style="position:absolute; top:95px; left:200px; z-index:2;">
+                    <p class="white--text title">{{getCompanyInfo.companyName}}</p>
+                  </div>
+
+                  <v-card tile elevation="0" class="white" height="50">
+                    
+                    <v-tabs
+                      v-model="tab"
+                    >
+                      <v-spacer></v-spacer>
+                      <v-tab href="#tab-1">
+                        Overview
+                      </v-tab>
+                      <v-tab href="#tab-2">
+                        Jobs
+                      </v-tab>
+                      <v-tab href="#tab-3">
+                        Feedback
+                      </v-tab>
+                    </v-tabs>
+                  </v-card>
+                </div>
+
+
+                <!-- xs only -->
+                <div class="hidden-sm-and-up">
+                  <v-card tile elevation="0" class="white"  style="position:relative;">
+                    <v-img
+                      style="border:solid 1px #eee; position:relative; top:-25px;"
+                      :src="require('../assets/no_company_profile_img.png')"
+                      height="130"
+                      width="130"
+                      class="mx-auto"
+                    >
+                    </v-img>
+                    <p class="text-center title ma-0">{{getCompanyInfo.companyName}}</p>
+                    <div class="mb-3"></div>
+                    <v-tabs
+                      fixed-tabs
+                      v-model="tab"
+                    >
+                      <v-tab href="#tab-1">
+                        Overview
+                      </v-tab>
+                      <v-tab href="#tab-2">
+                        Jobs
+                      </v-tab>
+                      <v-tab href="#tab-3">
+                        Feedback
+                      </v-tab>
+                    </v-tabs>
+
+                     
+                  </v-card>
+                </div>
+                
+              </div>
+            </v-card>
+
+
+            <v-tabs-items v-model="tab">
+              <v-tab-item
+                value="tab-1"
+                style="background:#fafafa;"
+              >
+                <v-col cols="12" class="px-0 py-2">
+                  <v-card class="white" tile elevation="1" :class="{'pa-5': $vuetify.breakpoint.smAndDown, 'pa-12': $vuetify.breakpoint.mdAndUp}">
+                    <p class="headline">Overview</p>
+                   
+
+                    <!-- Opening ParagView -->
+                    <div v-for="(openingParag,index) in getCompanyInfo.overviewOpeningParag" :key="index"
+                    >
+                      <blockquote class="mb-8 text-justify">
+                        {{openingParag}}
+                      </blockquote>
+                    </div>
+
+
+
+
+
+
+
+                    
+                    <div style="position:relative;">
+                      <p class="body-1 font-weight-medium">
+                        Why join us?
+                      </p>
+                    </div>
+                    
+                    <div v-for="whyJoinUs in getCompanyInfo.whyJoinUs" :key="whyJoinUs">
+                      <blockquote class="mb-8 text-justify">
+                        {{whyJoinUs}}
+                      </blockquote>
+                    </div>
+
+
+
+
+
+
+
+                    
+                    <div style="position:relative;">
+                      <p class="body-1 font-weight-medium pr-8">
+                        What else makes us a great employer?
+                      </p>
+                      
+                      
+                    </div>
+                    <ul class="body-2" v-for="whatElse in getCompanyInfo.whatElse" :key="whatElse">
+                      <li>{{whatElse}}</li>
+                    </ul>
+                  </v-card>
+                </v-col>  
+              </v-tab-item>
+
+
+              <!-- JOBS VIEW -->
+
+              <v-tab-item
+                value="tab-2"
+                style="background:#fafafa;"
+              >
+                <v-col cols="12" class="px-0 py-2">
+                  <v-card tile elevation="1" class="pa-2">
+                    <v-container class="pa-0">
+                      <v-row>
+                        <v-col cols="12" class="py-0" md="4" lg="3" sm="6" 
+                          v-for="(getCompanyJob,index) in getCompanyJobs" :key="index"
+                        >
+                          <company-jobs :companyjobs="getCompanyJob"></company-jobs>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+                
+              </v-tab-item>
+
+
+
+              <!-- FEEDBACK -->
+
+              <v-tab-item
+                value="tab-3"
+                style="background:#fafafa;"
+              >
+                <v-col cols="12" class="px-0 py-2">
+                  <v-card height="500" tile elevation="1">
+                    <p class="display-1 text-center pt-12">Feedback</p>
+                  </v-card>
+                </v-col>
+              </v-tab-item>
+            </v-tabs-items>
+
+          </v-col>
+      </v-row>
+  </v-container>
+</template>
+
+<script>
+import CompanyJobs from '../components/CompanyJobs'
+
+
+export default {
+    components:{
+      'company-jobs':CompanyJobs
+    },
+    data:()=>({
+        tab:null
+    }),
+    computed: {
+      getCompanyInfo(){
+        return this.$store.getters.getCompanyInfo;
+      },
+      getCompanyJobs(){
+        return this.$store.getters.getCompanyJobs;
+      }
+    }
+}
+</script>
+
+<style>
+
+</style>

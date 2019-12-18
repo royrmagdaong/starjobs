@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {dbFirestore} from '../firebasedb'
+import {dbFirestore,db} from '../firebasedb'
 
 Vue.use(Vuex);
 
@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
         isCompany:false,
         companyInfo:{},
         applicantInfo:{},
-        jobPosts:[]
+        jobPosts:[],
+        companyJobs:[],
     },
     getters:{
         getIsApplicant: state => {
@@ -27,6 +28,9 @@ export const store = new Vuex.Store({
         },
         getJobPosts: state => {
             return state.jobPosts;
+        },
+        getCompanyJobs: state => {
+            return state.companyJobs;
         }
     },
     mutations:{
@@ -44,6 +48,9 @@ export const store = new Vuex.Store({
         },
         setJobPosts(state,data){
             state.jobPosts = data;
+        },
+        setCompanyJobs(state,data){
+            state.companyJobs = data;
         }
     },
     actions:{
@@ -76,7 +83,27 @@ export const store = new Vuex.Store({
             .catch(function(error) {
                 window.console.log("Error getting documents: ", error);
             });
-            
+        },
+        setCompanyJobs: (context) => {
+            var jobPostDocs = dbFirestore.collection("JobPosts").where("uid", "==", db.auth().currentUser.uid);
+
+            var docArr = [];
+
+            jobPostDocs.get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach(function(doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    docArr.push(doc.data());
+                });
+
+                context.commit('setCompanyJobs',docArr);
+            })
+            .catch(function(error) {
+                window.console.log("Error getting documents: ", error);
+            });
+        },
+        setCompanyJobsClear: (context,payload) => {
+            context.commit('setCompanyJobs', payload);
         }
     }
 })

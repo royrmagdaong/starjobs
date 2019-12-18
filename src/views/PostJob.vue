@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import {dbFirestore} from '../firebasedb'
+import {dbFirestore,db} from '../firebasedb'
 
 export default {
     data:()=>({
@@ -95,7 +95,8 @@ export default {
                     location:this.location,
                     expectedSalary:this.expectedSalary,
                     qualifications:this.qualifications,
-                    jobDescriptions:this.jobDescriptions
+                    jobDescriptions:this.jobDescriptions,
+                    uid:db.auth().currentUser.uid
 
                 }).then(()=>{
                     window.console.log('job post created');

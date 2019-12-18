@@ -29,6 +29,7 @@
                   </v-list-item>
               </v-list>
           </v-menu>
+          <v-btn text v-if="!getIsCompany" class="caption font-weight-bold hidden-sm-and-down" router-link to="/search-company" color="primary">Search Company</v-btn>
           <v-btn text router-link to="/login" color="primary" class="hidden-sm-and-down caption font-weight-bold" v-if="!isLogin">LOG IN</v-btn>
           <v-btn text router-link to="/sign-up" color="primary" class="hidden-sm-and-down caption font-weight-bold" v-if="!isLogin">SIGN UP</v-btn>
 
@@ -133,6 +134,12 @@
         <v-list-item router-link to="/search-jobs" v-if="isLogin && getIsApplicant">
           <v-list-item-content>
             <v-list-item-title >Search Job</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item router-link to="/search-Company" v-if="isLogin && getIsApplicant">
+          <v-list-item-content>
+            <v-list-item-title >Search Company</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         

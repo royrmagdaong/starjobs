@@ -30,14 +30,6 @@
             <div v-for="(getJobPost,index) in getJobPosts" :key="index" class="mb-2">
                 <job-post :jobPost="getJobPost"></job-post>
             </div>
-             <!-- <v-pagination
-                v-model="page"  
-                :length="12"
-                prev-icon="mdi-menu-left"
-                next-icon="mdi-menu-right"
-                total-visible="7"
-                class="mb-1"
-             ></v-pagination> -->
           </v-col>
 
 
@@ -65,9 +57,6 @@ export default {
     components:{
         'job-post':JobPost,
         
-    },
-    created(){
-        this.$store.dispatch('setJobPosts','');
     },
     data:()=>({
         page: 1,
