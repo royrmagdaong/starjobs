@@ -9,6 +9,9 @@ import SearchJobs from './views/SearchJobs'
 import Profile from './views/Profile'
 import PostJob from './views/PostJob'
 import CompanyProfile from './views/CompanyProfile'
+import SearchCompany from './views/SearchCompany'
+import ViewCompanyProfile from './views/ViewCompanyProfile'
+import ViewJobPost from './views/ViewJobPost'
 
 Vue.use(Router)
 
@@ -28,6 +31,21 @@ const router =  new Router({
       path: '/home',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/search-company',
+      name: 'search-company',
+      component: SearchCompany
+    },
+    {
+      path: '/view-company',
+      name: 'view-company',
+      component: ViewCompanyProfile
+    },
+    {
+      path: '/view-job',
+      name: 'view-job',
+      component: ViewJobPost
     },
     {
       path: '/login',

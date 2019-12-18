@@ -23,6 +23,7 @@ export default {
   methods:{
   },
   created(){
+    this.$store.dispatch('setJobPosts','');
 
     db.auth().onAuthStateChanged(()=>{
       var currentUser = db.auth().currentUser;
@@ -46,6 +47,9 @@ export default {
         }else{
           var companyDoc = dbFirestore.collection("company").doc(db.auth().currentUser.uid);
 
+          // populate company jobs
+          this.$store.dispatch('setCompanyJobs','');
+
           companyDoc.get().then((doc) => {
               if (doc.exists) {
                   //store data in vuex
@@ -64,6 +68,11 @@ export default {
         window.console.log('null');
         this.$store.dispatch('setIsApplicant',false);
         this.$store.dispatch('setIsCompany',false);
+
+        //clear user info
+        this.$store.dispatch('setCompanyInfo',null);
+        this.$store.dispatch('setApplicantInfo',null);
+        this.$store.dispatch('setCompanyJobsClear',null);
       }
     });
   },

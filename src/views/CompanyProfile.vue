@@ -11,137 +11,343 @@
                   height="150"
                 >
                 </v-img>
-                <v-img style="position:absolute; top:45px; left:50px; z-index:2; border:solid 1px #eee;"
-                  :src="require('../assets/no_company_profile_img.png')"
-                  height="130"
-                  width="130"
-                >
-                </v-img>
 
-                <div style="position:absolute; top:95px; left:200px; z-index:2;">
-                  <p class="white--text title">{{getCompanyInfo.companyName}}</p>
+                <!-- sm and above -->
+                <div class="hidden-xs-only">
+                  <v-img style="position:absolute; top:45px; left:50px; z-index:2; border:solid 1px #eee;"
+                    :src="require('../assets/no_company_profile_img.png')"
+                    height="130"
+                    width="130"
+                  >
+                  </v-img>
+
+                  <div style="position:absolute; top:95px; left:200px; z-index:2;">
+                    <p class="white--text title">{{getCompanyInfo.companyName}}</p>
+                  </div>
+
+                  <v-card tile elevation="0" class="white" height="50">
+                    
+                    <v-tabs
+                      v-model="tab"
+                    >
+                      <v-spacer></v-spacer>
+                      <v-tab href="#tab-1">
+                        Overview
+                      </v-tab>
+                      <v-tab href="#tab-2">
+                        Jobs
+                      </v-tab>
+                      <v-tab href="#tab-3">
+                        Feedback
+                      </v-tab>
+                    </v-tabs>
+                  </v-card>
                 </div>
+
+
+                <!-- xs only -->
+                <div class="hidden-sm-and-up">
+                  <v-card tile elevation="0" class="white"  style="position:relative;">
+                    <v-img
+                      style="border:solid 1px #eee; position:relative; top:-25px;"
+                      :src="require('../assets/no_company_profile_img.png')"
+                      height="130"
+                      width="130"
+                      class="mx-auto"
+                    >
+                    </v-img>
+                    <p class="text-center title ma-0">{{getCompanyInfo.companyName}}</p>
+                    <div class="mb-3"></div>
+                    <v-tabs
+                      fixed-tabs
+                      v-model="tab"
+                    >
+                      <v-tab href="#tab-1">
+                        Overview
+                      </v-tab>
+                      <v-tab href="#tab-2">
+                        Jobs
+                      </v-tab>
+                      <v-tab href="#tab-3">
+                        Feedback
+                      </v-tab>
+                    </v-tabs>
+
+                     
+                  </v-card>
+                </div>
+                
               </div>
-              <v-card tile elevation="0" class="white" height="50">
-              </v-card>
             </v-card>
 
-            <v-col cols="12" class="px-0 py-2">
-                <v-card class="white pa-12" tile>
-                  <p class="headline">Overview</p>
-                  <blockquote class="mb-8 text-justify">
-                    At (Company Name), we work with some of the biggest companies in the Philippines and around the world.
-                      We solve our clients’ toughest challenges by providing unmatched services in strategy, consulting, digital, technology and operations.  Today, more than ever, we are adopting innovation to deliver transformational outcomes for a demanding new digital world.
-                        How do we do it? We apply the new every day, through new thinking, technology, innovation and delivery platforms that revolutionize our clients’ businesses.
-                        We invest in the future by empowering our people to lead in the new through next horizon business and leadership skills.
-                      With our 49,000-strong community in the Philippines and as one of the biggest and most diversified IT-BPM company in the country today, Accenture works to make a difference in the way the world works and lives.
-                  </blockquote>
-                  <p class="body-1 font-weight-medium">Why join us?</p>
-                  <blockquote class="my-4 text-justify">
-                    Build a career that engages your whole self to become the best you. At Accenture, you’ll have the opportunity to explore your passions to solve challenges that are relevant to you. Future proof your career as you continuously learn and grow. New labs, innovations centers, liquid studios and learning facilities allow us to collaborate like never before. You’ll work with supportive colleagues, get access to training opportunities so you can perform at your best and have the freedom to drive your career in the direction that you want. 
-                  </blockquote>
 
-                  <blockquote class="my-4 text-justify">
-                    By joining Accenture, you’ll also get the chance to apply the new every day – new thinking, new technology, innovation and delivery platforms to revolutionize the way the world works and lives. Whatever career path you choose, you’ll be in the position to experiment, innovate and deliver breakthrough solutions that make a difference in people’s lives.
-                  </blockquote>
+            <v-tabs-items v-model="tab">
+              <v-tab-item
+                value="tab-1"
+                style="background:#fafafa;"
+              >
+                <v-col cols="12" class="px-0 py-2">
+                  <v-card class="white" tile elevation="1" :class="{'pa-5': $vuetify.breakpoint.smAndDown, 'pa-12': $vuetify.breakpoint.mdAndUp}">
+                    
+                    <!-- Opening Paragraph Dialog -->
+                        <v-dialog v-model="openingParagDialog" max-width="600px" >
+                          <template v-slot:activator="{ on }">
+                            <div style="position:relative;">
+                              <p class="headline">Overview</p>
+                              <v-icon color="primary" class="ml-2" v-on="on" style="position:absolute; right:0; top:0;">mdi-border-color</v-icon>
+                            </div>
+                          </template>
+                          <v-card>  
+                            <v-card-title>
+                              <span class="headline">Overview</span>
+                            </v-card-title>
 
-                  <p class="body-1 font-weight-medium">What else makes us a great employer?</p>
-                  <ul class="body-2">
-                    <li>In fiscal 2016, we invested US$941M in learning and development for our people.</li>
-                    <li>We strive to build a diverse and inclusive workplace where everyone feels a sense of belonging. We have more than 150,000 women globally, and we target to grow our percentage of women by 50 percent in 2025. </li>
-                    <li>We value the contribution of our working mothers, providing them an array of benefits including 120 days of maternity leave.</li>
-                    <li>With our corporate citizenship initiatives, you’ll have the opportunity to support meaningful causes and make a bigger impact. In fiscal 2016, our people contributed more than 700,000 hours to volunteering activities, from teaching young students how to code to helping nonprofits build houses for the poor.</li>
-                  </ul>
+                            <!-- Opening Paragraph, Form -->
+                            <div class="pa-2">
+                              <div class="pa-4 my-2" style="border:1px #424242 solid;"
+                              >
+                                <p class="primary--text text-center caption">Paragraph</p>
+                                <div v-for="(openingParag,index) in getCompanyInfo.overviewOpeningParag" :key="index">
+                                  <v-textarea
+                                      dense
+                                      :label="'Paragraph ' + (index+1)"
+                                      outlined
+                                      rows="6"
+                                      color="primary"
+                                      class="caption"
+                                      v-model="getCompanyInfo.overviewOpeningParag[index]"
+                                  ></v-textarea>
+                                </div>
+                              </div>
+                              
+                              <v-divider class="light-green mt-6"></v-divider>
+                              <v-divider class="light-green"></v-divider>
+                              <v-divider class="light-green mb-6"></v-divider>
 
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="4" xs="6" class="py-0">
-                        <v-container>
-                          <v-row>
-                            <v-col cols="3" class=" text-right">
-                              <v-avatar size="60" color="grey"></v-avatar>
-                            </v-col>
-                            <v-col cols="9" class="">
-                              <p class="body-2 mb-2 font-weight-medium">Company size</p>
-                              <p class="caption">More than 1,000 employees</p>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-col>
+                              <!-- ADD Opening Paragraph -->
+                              <div class="pa-4" style="border:1px solid #8BC34A;">
+                                <p class=" body-2 font-weight-bold ma-2 text-center">Add Paragraph</p>
+                                <v-textarea
+                                    dense
+                                    label="Paragraph"
+                                    outlined
+                                    color="light-green"
+                                    rows="6"
+                                    class="caption"
+                                    v-model="newOpeningParag"
+                                ></v-textarea>
+                                
+                                <v-btn block color="light-green white--text" @click="addOpeningParag()">Add</v-btn>
+                              </div>
+                            </div>
 
-                      <v-col cols="12" sm="4" xs="6" class="py-0">
-                        <v-container>
-                          <v-row>
-                            <v-col cols="3" class=" text-right">
-                              <v-avatar size="60" color="grey"></v-avatar>
-                            </v-col>
-                            <v-col cols="9" class="">
-                              <p class="body-2 mb-2 font-weight-medium">Benefits</p>
-                              <p class="caption">Medical, Miscellaneous allowance, Dental, Employee Stock Purchase, Plan, Expanded Maternity Leave, Retirement Plan</p>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-col>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="primary " text @click="openingParagDialog = false">Close</v-btn>
+                              <v-btn color="primary " text @click.prevent="updateOpeningParag()">Save</v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
 
-                      <v-col cols="12" sm="4" xs="6" class="py-0">
-                        <v-container>
-                          <v-row>
-                            <v-col cols="3" class=" text-right">
-                              <v-avatar size="60" color="grey"></v-avatar>
-                            </v-col>
-                            <v-col cols="9" class="">
-                              <p class="body-2 mb-2 font-weight-medium">WORK HOURS</p>
-                              <p class="caption">Shifting Schedule</p>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-col>
+                    <!-- Opening ParagView -->
+                    <div v-for="(openingParag,index) in getCompanyInfo.overviewOpeningParag" :key="index"
+                    >
+                      <blockquote class="mb-8 text-justify">
+                        {{openingParag}}
+                      </blockquote>
+                    </div>
+
+
+
+
+
+
+
+                    
+                    <div style="position:relative;">
+                      <p class="body-1 font-weight-medium">
+                        Why join us?
+                        <!-- Why Join Us Dialog -->
+                        <v-dialog v-model="whyJoinUsDialog" max-width="600px" style="position:relative;">
+                          <template v-slot:activator="{ on }">
+                            <v-icon color="primary" class="ml-2" v-on="on" style="position:absolute; right:0px; top:0px;">mdi-border-color</v-icon>
+                          </template>
+                          <v-card>  
+                            <v-card-title>
+                              <span class="headline">Why join us?</span>
+                            </v-card-title>
+
+                            <!-- Why Join Us, Form -->
+                            <div class="pa-2">
+                              <div class="pa-4 my-2" style="border:1px #424242 solid;"
+                              >
+                                <p class="primary--text text-center caption">Paragraph</p>
+                                <div v-for="(whyJoinUs,index) in getCompanyInfo.whyJoinUs" :key="index">
+                                  <v-textarea
+                                      class="caption"
+                                      dense
+                                      :label="'Paragraph ' + (index+1)"
+                                      outlined
+                                      rows="6"
+                                      color="primary"
+                                      v-model="getCompanyInfo.whyJoinUs[index]"
+                                  ></v-textarea>
+                                </div>
+                              </div>
+                              
+                              <v-divider class="light-green mt-6"></v-divider>
+                              <v-divider class="light-green"></v-divider>
+                              <v-divider class="light-green mb-6"></v-divider>
+
+                              <!-- ADD Opening Paragraph -->
+                              <div class="pa-4" style="border:1px solid #8BC34A;">
+                                <p class=" body-2 font-weight-bold ma-2 text-center">Add Paragraph</p>
+                                <v-textarea
+                                    class="caption"
+                                    dense
+                                    label="Paragraph"
+                                    outlined
+                                    color="light-green"
+                                    rows="6"
+                                    v-model="newWhyJoinUs"
+                                ></v-textarea>
+                                
+                                <v-btn block color="light-green white--text" @click="addWhyJoinUs()">Add</v-btn>
+                              </div>
+                            </div>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="primary " text @click="whyJoinUsDialog = false">Close</v-btn>
+                              <v-btn color="primary " text @click.prevent="updateWhyJoinUs()">Save</v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                        
+                      </p>
+                    </div>
+                    
+                    <div v-for="whyJoinUs in getCompanyInfo.whyJoinUs" :key="whyJoinUs">
+                      <blockquote class="mb-8 text-justify">
+                        {{whyJoinUs}}
+                      </blockquote>
+                    </div>
+
+
+
+
+
+
+
+                    
+                    <div style="position:relative;">
+                      <p class="body-1 font-weight-medium pr-8">
+                        What else makes us a great employer?
+                      </p>
+                      <!-- <v-icon color="primary" class="ml-2" style="position:absolute; right:0; top:0px;">mdi-border-color</v-icon> -->
+                      <!-- Opening Paragraph Dialog -->
+                        <v-dialog v-model="whatElseDialog" max-width="600px" style="position:relative;">
+                          <template v-slot:activator="{ on }">
+                            <v-icon color="primary" class="ml-2" v-on="on" style="position:absolute; right:0px; top:0px;">mdi-border-color</v-icon>
+                          </template>
+                          <v-card>  
+                            <v-card-title>
+                              <span class="headline">What else makes us a great employer?</span>
+                            </v-card-title>
+
+                            <!-- Opening Paragraph, Form -->
+                            <div class="pa-2">
+                              <div class="pa-4 my-2" style="border:1px #424242 solid;"
+                              >
+                                <p class="primary--text text-center caption">Paragraph</p>
+                                <div v-for="(whatElse,index) in getCompanyInfo.whatElse" :key="index">
+                                  <v-textarea
+                                      class="caption"
+                                      dense
+                                      :label="'Item ' + (index+1)"
+                                      outlined
+                                      rows="5"
+                                      color="primary"
+                                      v-model="getCompanyInfo.whatElse[index]"
+                                  ></v-textarea>
+                                </div>
+                              </div>
+                              
+                              <v-divider class="light-green mt-6"></v-divider>
+                              <v-divider class="light-green"></v-divider>
+                              <v-divider class="light-green mb-6"></v-divider>
+
+                              <!-- ADD Opening Paragraph -->
+                              <div class="pa-4" style="border:1px solid #8BC34A;">
+                                <p class=" body-2 font-weight-bold ma-2 text-center">Add Paragraph</p>
+                                <v-textarea
+                                    class="caption"
+                                    dense
+                                    label="Paragraph"
+                                    outlined
+                                    color="light-green"
+                                    rows="5"
+                                    v-model="newWhatElse"
+                                ></v-textarea>
+                                
+                                <v-btn block color="light-green white--text" @click="addWhatElse()">Add</v-btn>
+                              </div>
+                            </div>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="primary " text @click="whatElseDialog = false">Close</v-btn>
+                              <v-btn color="primary " text @click.prevent="updateWhatElse()">Save</v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                       
-                      <v-col cols="12" sm="4" xs="6" class="py-0">
-                        <v-container>
-                          <v-row>
-                            <v-col cols="3" class=" text-right">
-                              <v-avatar size="60" color="grey"></v-avatar>
-                            </v-col>
-                            <v-col cols="9" class="">
-                              <p class="body-2 mb-2 font-weight-medium">DRESS CODE</p>
-                              <p class="caption">Business Casual</p>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-col>
+                    </div>
+                    <ul class="body-2" v-for="whatElse in getCompanyInfo.whatElse" :key="whatElse">
+                      <li>{{whatElse}}</li>
+                    </ul>
+                  </v-card>
+                </v-col>  
+              </v-tab-item>
 
-                      <v-col cols="12" sm="4" xs="6" class="py-0">
-                        <v-container>
-                          <v-row>
-                            <v-col cols="3" class=" text-right">
-                              <v-avatar size="60" color="grey"></v-avatar>
-                            </v-col>
-                            <v-col cols="9" class="">
-                              <p class="body-2 mb-2 font-weight-medium">SPOKEN LANGUAGE</p>
-                              <p class="caption">English</p>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-col>
 
-                      <v-col cols="12" sm="4" xs="6" class="py-0">
-                        <v-container>
-                          <v-row>
-                            <v-col cols="3" class=" text-right">
-                              <v-avatar size="60" color="grey"></v-avatar>
-                            </v-col>
-                            <v-col cols="9" class="">
-                              <p class="body-2 mb-2 font-weight-medium">AVERAGE PROCESSING TIME</p>
-                              <p class="caption">4 days</p>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card>
-            </v-col>
+              <!-- JOBS VIEW -->
+
+              <v-tab-item
+                value="tab-2"
+                style="background:#fafafa;"
+              >
+                <v-col cols="12" class="px-0 py-2">
+                  <v-card tile elevation="1" class="pa-2">
+                    <v-container class="pa-0">
+                      <v-row>
+                        <v-col cols="12" class="py-0" md="4" lg="3" sm="6" 
+                          v-for="(getCompanyJob,index) in getCompanyJobs" :key="index"
+                        >
+                          <company-jobs :companyjobs="getCompanyJob"></company-jobs>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+                
+              </v-tab-item>
+
+
+
+              <!-- FEEDBACK -->
+
+              <v-tab-item
+                value="tab-3"
+                style="background:#fafafa;"
+              >
+                <v-col cols="12" class="px-0 py-2">
+                  <v-card height="500" tile elevation="1">
+                    <p class="display-1 text-center pt-12">Feedback</p>
+                  </v-card>
+                </v-col>
+              </v-tab-item>
+            </v-tabs-items>
 
           </v-col>
       </v-row>
@@ -149,18 +355,86 @@
 </template>
 
 <script>
+import {dbFirestore,db} from '../firebasedb'
+import CompanyJobs from '../components/CompanyJobs'
+
 
 export default {
+    components:{
+      'company-jobs':CompanyJobs
+    },
     data:()=>({
-        
+        openingParagDialog:false,
+        whyJoinUsDialog:false,
+        whatElseDialog:false,
+        newOpeningParag:'',
+        newWhyJoinUs:'',
+        newWhatElse:'',
+        tab:null,
     }),
     computed: {
       getCompanyInfo(){
         return this.$store.getters.getCompanyInfo;
+      },
+      getCompanyJobs(){
+        return this.$store.getters.getCompanyJobs;
       }
     },
     methods:{
-      
+      addOpeningParag(){
+        if(this.newOpeningParag != ''){
+          this.getCompanyInfo.overviewOpeningParag.push(this.newOpeningParag);
+          this.newOpeningParag = '';
+        }
+      },
+      addWhyJoinUs(){
+        if(this.newWhyJoinUs != ''){
+          this.getCompanyInfo.whyJoinUs.push(this.newWhyJoinUs);
+          this.newWhyJoinUs = '';
+        }
+      },
+      addWhatElse(){
+        if(this.newWhatElse != ''){
+          this.getCompanyInfo.whatElse.push(this.newWhatElse);
+          this.newWhatElse = '';
+        }
+      },
+      updateOpeningParag(){
+        var companyRef = dbFirestore.collection("company").doc(db.auth().currentUser.uid);
+
+        return companyRef.update({
+            overviewOpeningParag: this.getCompanyInfo.overviewOpeningParag
+        }).then(()=>{
+            window.console.log("Overview successfully updated!");
+            this.openingParagDialog = false;
+        }).catch((error)=>{
+            window.console.error("Error updating document: ", error);
+        });
+      },
+      updateWhyJoinUs(){
+        var companyRef = dbFirestore.collection("company").doc(db.auth().currentUser.uid);
+
+        return companyRef.update({
+            whyJoinUs: this.getCompanyInfo.whyJoinUs
+        }).then(()=>{
+            window.console.log("Why Join Us successfully updated!");
+            this.whyJoinUsDialog = false;
+        }).catch((error)=>{
+            window.console.error("Error updating document: ", error);
+        });
+      },
+      updateWhatElse(){
+        var companyRef = dbFirestore.collection("company").doc(db.auth().currentUser.uid);
+
+        return companyRef.update({
+            whatElse: this.getCompanyInfo.whatElse
+        }).then(()=>{
+            window.console.log("What Else successfully updated!");
+            this.whatElseDialog = false;
+        }).catch((error)=>{
+            window.console.error("Error updating document: ", error);
+        });
+      },
     }
 }
 </script>

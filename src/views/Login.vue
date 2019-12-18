@@ -10,6 +10,7 @@
                     prepend-icon="email"
                     append-icon="close"
                     v-model="email"
+                    dense
                 ></v-text-field>
                 <v-text-field
                     label="Password"
@@ -18,6 +19,7 @@
                     prepend-icon="lock"
                     append-icon="close"
                     v-model="password"
+                    dense
                 ></v-text-field>
                 <v-btn block large light class="primary darken-1 font-weight-bold" @click.prevent="signIn">
                     Log in 
